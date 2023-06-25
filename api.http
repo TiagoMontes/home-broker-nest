@@ -1,19 +1,28 @@
 GET http://localhost:3000/
 
-###
-POST http://localhost:3000/assets
-Content-Type: application/json
 
+###
+// GET ALL ASSETS
+GET http://localhost:3000/assets
+
+
+###
+// CREATE ASSET
+POST http://localhost:3000/assets
+
+Content-Type: application/json
 {
-    "id": "asset1",
+    "id": "asset2",
     "symbol": "A1",
-    "price": 100
+    "price": 50
 }
 
-###
-DELETE http://localhost:3000/assets
-Content-Type: application/json
 
+###
+// DELETE SPECIFIC ASSET
+DELETE http://localhost:3000/assets
+
+Content-Type: application/json
 {
     "id": "asset2"
 }

@@ -11,9 +11,30 @@ datasource db {
 }
 
 model Asset{
-  id         String   @id @map("_id")
-  symbol     String
-  price      Float
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          String   @id @map("_id")
+  symbol      String
+  price       Float
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  WalletAsset WalletAsset[] // Uma asset está em várias carteiras de ativos
+}
+
+model Wallet{
+  id          String @id @map("_id")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  WalletAsset WalletAsset[] // Uma wallet também está em várias carteiras de ativos
+}
+
+model WalletAsset{ // O ativo da carteira está em uma Wallet e em um Asset
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  Wallet      Wallet @relation(fields: [wallet_id], references: [id])
+  Asset       Asset @relation(fields: [asset_id], references: [id])
+  wallet_id   String
+  asset_id    String
+  shares      Int @db.Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@unique([wallet_id, asset_id])
 }
